@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+	<!-- Linking Style Sheet -->
+	<link rel="stylesheet" href="sports.css">	
+	<body>
+		<div id="body">
+		</div>
+		<div id="header">
+		</div>
+		<div id="headertext">
+			<h5>Sports</h5>
+		</div>
+		<!-- Text for the opening paragraph -->
+		<div id="openingparagraph">
+		<p>For me, sports are <em>theraputic</em>. They're a great outlet for relieving stress, and keep me fit and healthy. They're
+		also great for meeting new people, and making friends. Some of my closest lifelong friends were met through playing
+		sports, and some of my best memories were made through sports too. Pictured below are some of my favourite sports. </p>
+		</div>
+		<!-- I put the whole scroller into one div to move it uniformly -->
+		<!-- Code taken from here: https://www.dwuser.com/education/content/creating-a-jquery-image-scroller/?fbclid=IwAR1pK2FSf6WJxKI4XhGTBQAnVepLpHCVhl3VJp8JJTVdfXxG4VLw6i8p6X8  -->
+		<div id="imagescroller">
+			<div id="scroller" style="width: 550px; height: 400px; margin: 0 auto;">
+				<div class="innerScrollArea">
+					<ul>
+						<!-- Photos for image scroller -->
+						<li><img src="badminton.jpg" width="600" height="400" /></a></li>
+						<li><img src="soccer.jpg" width="600" height="400" /></a></li>
+						<li><img src="swimming.jpg" width="600" height="400" /></a></li>
+						<li><img src="pool.jpg" width="600" height="400" /></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-- Wall of Text -->
+		<div id="content">
+			<p><b>Badminton:</b> Some of my earliest memories are playing badminton. We used to set up a net in our garden,
+			and play with our next-door neighbors. I don't play much anymore, but it was the sport that sparked my passion
+			for sports as a whole.</p>
+			<br />
+			<p><b>Soccer:</b> Soccer was the first sport I played with a club. I began playing for Avondale as a centre back, and played 
+			for 4 years. I used to watch the champions league with my Dad every time it was on, so soccer is very nostalgic to me.
+			I still kick the ball about with my friends for fun, but I don't play competitively anymore.</p>
+			<br />
+			<p><b>Swimming:</b> Swimming is my main source of exercise. I really enjoy it, and find it very peaceful. It's a really
+			good workout, and the tranquility of being underwater is beautiful. I like to challenge myself every time I go swimming,
+			and seeing my lung capacity increase over each session is really rewarding.</p>
+			<br />
+			<p><b>Pool:</b> Pool is my favorite sport to play with friends. There are pool tables in loads of pubs, and nothing beats
+			having a few of the boys at the table, with a packet of Taytos in my left hand and a Beamish in my right. It's not exactly
+			good for exercise, but it's a good bit of fun.</p>
+			<br />
+			<br />
+		</div>
+		<!-- Sidebar Background Div -->
+		<div id="sidebarbackground">
+		</div>
+		<!-- Sidebar div -->
+		<div id="sidebar">
+			<ul>
+				<!-- Creating hyperlinks between all the pages -->
+				<li><a href="index.html">Home</a></li>
+				<div class="dropdown-cv">
+					<button class="dropdownbutton">Curriculum Vitae</button>
+					<div class="dropdown-content">
+						<li><a href="personaldetails.html">Personal Details</a></li>
+						<li><a href="educationaldetails.html">Educational Details</a></li>
+						<li><a href="workexperience.html">Work Experience</a></li>
+					</div>
+				</div>
+				<div class="dropdown-cv">
+					<button class="dropdownbutton">Interests</button>
+					<div class="dropdown-content">
+						<li><a href="sports.html">Sports</a></li>
+						<li><a href="travel.html">Travel</a></li>
+					</div>
+				</div>
+				<li><a href="consulting.html">About Consulting</a></li>
+				<li><a href="ebus1.html">Services</a></li>
+			</ul>
+		</div>
+		<!-- JQuery Scroller JavaScript - Taken from link -->
+		<!-- https://www.dwuser.com/education/content/creating-a-jquery-image-scroller/?fbclid=IwAR1pK2FSf6WJxKI4XhGTBQAnVepLpHCVhl3VJp8JJTVdfXxG4VLw6i8p6X8 -->
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.1/jquery.min.js"></script>
+		<script type="text/javascript">
+			$(function(){
+				var scroller = $('#scroller div.innerScrollArea');
+				var scrollerContent = scroller.children('ul');
+				scrollerContent.children().clone().appendTo(scrollerContent);
+				var curX = 0;
+				scrollerContent.children().each(function(){
+					var $this = $(this);
+					$this.css('left', curX);
+					curX += $this.outerWidth(true);
+				});
+				var fullW = curX / 2;
+				var viewportW = scroller.width();
+
+				// Scrolling speed management
+				var controller = {curSpeed:0, fullSpeed:2};
+				var $controller = $(controller);
+				var tweenToNewSpeed = function(newSpeed, duration)
+				{
+					if (duration === undefined)
+						duration = 600;
+					$controller.stop(true).animate({curSpeed:newSpeed}, duration);
+				};
+
+				// Pause on hover
+				scroller.hover(function(){
+					tweenToNewSpeed(0);
+				}, function(){
+					tweenToNewSpeed(controller.fullSpeed);
+				});
+
+				// Scrolling management; start the automatical scrolling
+				var doScroll = function()
+				{
+					var curX = scroller.scrollLeft();
+					var newX = curX + controller.curSpeed;
+					if (newX > fullW*2 - viewportW)
+						newX -= fullW;
+					scroller.scrollLeft(newX);
+				};
+				setInterval(doScroll, 20);
+				tweenToNewSpeed(controller.fullSpeed);
+			});
+		</script>
+	</body>
+	
+</html>
