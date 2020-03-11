@@ -1,17 +1,26 @@
-<!DOCTYPE html>
-<html>
-	<link rel="stylesheet" href="style.css">
+<!DOCTYPE html> 
+<html> 
+	<!-- Linking Style Sheet -->
+	<link rel="stylesheet" href="ebus1.css"> 
 	<head>
-	
+		<title>E-Business</title>
 	</head>
-	
+
 	<body>
-	
-	<div id="header">
-		<h5>E-Business </h5>
-	</div>
-		
-	<!-- Sidebar div -->
+	<!-- Body Div -->
+		<div id="body">
+		</div>
+		<!-- Header Div -->
+		<div id="header">
+		</div>
+		<!-- Header Text Div -->
+		<div id="headertext">
+			<h5>Consulting Services</h5>
+		</div>
+		<!-- Sidebar Background Div -->
+		<div id="sidebarbackground">
+		</div>
+		<!-- Sidebar div -->
 		<div id="sidebar">
 			<ul>
 				<!-- Creating hyperlinks between all the pages -->
@@ -32,16 +41,92 @@
 					</div>
 				</div>
 				<li><a href="consulting.html">About Consulting</a></li>
-				<li><a href="ebus1.html">E-Business</a></li>
+				<li><a href="ebus1.html">Services</a></li>
 			</ul>
 		</div>
-		<div id="body">
-		</div>
-		<div id="sidebartop">
-		</div>
+		<!-- Content Div -->
 		<div id="content">
-			<p>	</p>
+			<h3>Calculate the cost of our Consulting Services:</h3>
+			<!-- Creating radiobuttons and assigning them values -->
+			<input type="radio" id="hyperautomation" name="service" value="200" >
+			<label for="hyperautomation">Hyperautomation @ €200</label><br>
+			<input type="radio" id="MultiExperience" name="service" value="500" >
+			<label for="MultiExperience">MultiExperience @ €500</label><br>
+			<input type="radio" id="DistributedCloud" name="service" value="1000" >
+			<label for="Distributed Cloud">Distributed Cloud @ €1000</label></p>
+			
+			<!-- Declaring ID's for the clearCalc() and calcDisp() function -->
+			<p id="SubTotal"></p>
+			<p id="Discount"></p>
+			<p id="VAT"></p>
+			<p id="Total"></p>
+			
+			<!-- Creating buttons and assigning them functions -->
+			<button type="button" onclick= "calcSub(argSelection.value)">Calculate Cost</button>
+			<button type="button" onclick= "clearCalc()">Clear Selection</button>
 		</div>
+
+		<script>
+			<!-- Declaring variables -->
+			var argSelection = 0;
+			var argDiscount, argVat, argPrice;
+				
+			function calcSub() {
+				<!-- Giving argSelection values based on what the radiobuttons have selected -->
+				if (hyperautomation.checked == true){
+					argSelection = hyperautomation.value;
+				}
+				else if (MultiExperience.checked == true){
+					argSelection = MultiExperience.value;	
+				}
+				else if (DistributedCloud.checked == true){
+					argSelection = DistributedCloud.value;
+				}
+				<!-- Calling the vatTotal function and passing the argument to it -->
+				calcVatTotal(argSelection);
+			}
+
+			function calcVatTotal(parmSelection){
+				<!-- Assigning values to all of the arguments -->
+				argsubTotal = parmSelection;
+				argdiscountAmt = 0.05 * parmSelection;
+				argvatAmt = 0.2 * (parmSelection - argdiscountAmt);
+				argtotalPrice = argsubTotal -argdiscountAmt +argvatAmt;
+				<!-- Calling the calcDisp function and passing the arguments to it -->
+				calcDisp(argsubTotal, argdiscountAmt, argvatAmt, argtotalPrice);
+			}
+
+			function calcDisp(parmsubTotal, parmdiscountAmt, parmvatAmt, parmtotalPrice) {
+				<!-- Showcasing the calculations -->
+				document.getElementById("SubTotal").innerHTML = "Subtotal: " + "        " + "€" + parmsubTotal;
+				<!-- toFixed will remove any decimals and round the numbers -->
+				document.getElementById("Discount").innerHTML = "Discount @ 5%: " + "                " + "€" + parmdiscountAmt.toFixed(2);
+				document.getElementById("VAT").innerHTML = "Vat @ 20%: " + "                     " + "€" + parmvatAmt.toFixed(2);
+				document.getElementById("Total").innerHTML = "Total: "  + "                  " + "€"+ parmtotalPrice.toFixed(2);
+				
+				<!-- Used in the clearCalc() function  -->
+				document.getElementById("SubTotal").style.display = "block";
+				document.getElementById("Discount").style.display = "block";
+				document.getElementById("VAT").style.display = "block";
+				document.getElementById("Total").style.display = "block";
+
+			}
+			
+			
+			function clearCalc() {
+				<!-- Unchecking all the radiobuttons  -->
+				document.getElementsByName("Service").checked = false;
+				<!-- Hiding calculations  -->
+				document.getElementById("SubTotal").style.display = "none";
+				document.getElementById("Discount").style.display = "none";
+				document.getElementById("VAT").style.display = "none";
+				document.getElementById("Total").style.display = "none";
+				
+			}
+
+		</script>
+
+	 
+
 	</body>
-	
-</html>
+</html> 
